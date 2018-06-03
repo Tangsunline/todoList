@@ -1,5 +1,5 @@
 <template>
-   <div>{{test}}</div>
+   <div id="test">{{test}}</div>
 </template>
 <script>
    export default {
