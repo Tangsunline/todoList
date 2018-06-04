@@ -5,7 +5,7 @@
    export default {
       data() {
          return {
-            test:'tangqi会'
+            test:'33'
          }
 
       }

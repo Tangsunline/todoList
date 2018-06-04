@@ -18,6 +18,10 @@ const config=   {
             loader:'vue-loader'
          },
          {
+            test: /\.jsx$/,
+            loader: 'babel-loader'
+         },
+         {
             test:/\.css$/,
             use: [
                'style-loader',
@@ -29,6 +33,12 @@ const config=   {
             use:[
                'style-loader',
                'css-loader',
+               {
+                  'loader':'postcss-loader',
+                  options: {
+                     sourceMap:true
+                  }
+               },
                'stylus-loader',
             ]
          },
@@ -60,13 +70,19 @@ const config=   {
 // "build": "cross-env NODE_ENV=production webpack --config webpack.config.js", 生产环境 
 //"dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js"  开发环境
 if(isDev) {
+   config.devtool = '#cheap-module-eval-source-map';//方便调试代码； 你写的什么代码浏览器就会显示什么代码；不会编译成其他样式
    config.devServer = {
-      port:'8000',
+      port:'8080',
       host:'0.0.0.0',
       overlay: {
          errors: true,//显示webpack编译的错误
-      }
-   }
+      },
+      hot :true,// 修改组件的 代码，只需要加载修改的代码；不会重新加载左右的 代码； 否则就会刷新页面；
+   },
+   config.plugins.push(
+      new webpack.HotModuleReplacementPlugin(),//启动 hot 功能
+      new webpack.NoEmitOnErrorsPlugin()
+   )
 }
 
 module.exports = config;
